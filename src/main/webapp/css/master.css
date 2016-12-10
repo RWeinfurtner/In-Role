@@ -1,0 +1,180 @@
+
+
+/*Landing Page */
+
+
+.container {
+	background-color: #53585F;
+	text-align: center;	
+}
+
+
+.email-box {
+	margin-top: 20px;
+}
+
+.btn {
+	background-color: #C82506; 
+} 
+
+
+.btn p {
+	font-size: 20px;
+	font-style: bold;
+	font-family: futura;
+}
+
+#logInButton {
+	border-radius: 10px;
+	border-color: #000000;
+	border-width: 1px;
+	margin-bottom: 10%;
+}
+
+
+#buildingImg {
+	margin: 0 auto;
+	margin-top: 15px;
+	
+}
+
+#main-content {
+	background-color: #53585F;
+}
+
+
+#newsLetterButton {
+	border-radius: 10px;
+	border-color: #000000;
+	border-width: 1px;
+	background-color: #F5D328;
+	margin-top: 10px;
+}
+
+.newsLetter {
+	margin-top: 10px;
+}
+
+#newsLetterText {
+	color: #E4E3E3;
+	
+}
+
+.aboutUs {
+	color: #E4E3E3;
+}
+
+.miscFooterItem {
+	color: #E4E3E3;
+}
+
+#textTitle {
+	text-decoration: underline;
+}
+
+/*All Home Pages */
+
+#accordion {
+	margin-top: 35px;
+}
+
+/* Admin Home Page */
+
+
+
+/* Student Home Page */
+
+#StudentsImg {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Employer Home Page */
+
+#EmployerImg {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#womanImg {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*Footer */
+
+#WinningAwardImg {
+	display: inline;
+	width: 150px;
+	height: auto;
+	vertical-align: top;
+}
+
+#finalistAwardImg {
+	display: inline;
+	width: 120px;
+	height: auto;
+	vertical-align: top;
+}
+
+#BitmojiAwardImg {
+	display: inline;
+	width: 120px;
+	height: auto;
+	vertical-align: top;
+	
+}
+
+#Footer-content {
+	background-color: #53585F;
+}
+
+#footerGap {
+	height: 3px;
+	width: 100%;
+	background-color: black;
+	margin-bottom: 5%;
+	margin-top: 5%;
+}
+
+.aboutUs {
+	color: #E4E3E3;
+}
+
+.miscFooterItem {
+	color: #E4E3E3;
+}
+
+#textTitle {
+	text-decoration: underline;
+	font-size: 18px;
+}
+
+/*Hiring Network */
+
+#employerName {
+	font-size: 22px;
+	text-decoration: underline;
+}
+
+/* Profiles */
+
+.pull-left:hover {
+    background: #f2f5ff;
+    border-radius:5px;
+    padding:2px 4px;
+}
+
+/* Invite Results */
+
+#inviteResult {
+	color: white;
+}
+
+.inviteText {
+	color: #E4E3E3;
+}
+

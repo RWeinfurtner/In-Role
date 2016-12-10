@@ -1,0 +1,15 @@
+DEMO:
+
+1. Staff member wants to create a new student AS staff@staff.com
+
+2. Staff wants to make a new event AS staff@staff.com
+
+3. Emily with PhotoList wants to look at and sign up for an event AS emily@photolist.com, password employer
+
+4. Adam, a student, wants to pick preferences for an event that has been created - AS adam@gmail.com, password: student
+
+* Log in to adam, pick preferences for Fall Matchmaking Bonanza
+
+5. Staff member is ready to generate a schedule prior to the event as staff@staff.com
+
+6. Staff, Emily with Photolist and Adam want to view schedules as staff@staff.com, adam@gmail.com pass student, Emily@photolist.com pass employer, from pre-generated schedule
