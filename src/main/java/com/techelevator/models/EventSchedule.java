@@ -8,6 +8,7 @@ import java.util.List;
 public abstract class EventSchedule {
 
 	public EventSchedule(List<Event> events) {
+		eventId = events.get(0).getEventId();
 		for (Event event : events) {
 			long totalTime = MINUTES.between(event.getStartTime(), event.getEndTime());
 			int length = event.getInterviewLength();
@@ -17,6 +18,13 @@ public abstract class EventSchedule {
 				addTimeSlot(start.plus(i*length, MINUTES));
 			}
 		}
+	}
+	
+	int eventId;
+	
+	public int getEventId()
+	{
+		return eventId;
 	}
 	
 	public abstract boolean isFilled();

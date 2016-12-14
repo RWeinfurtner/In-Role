@@ -97,10 +97,17 @@ CREATE TABLE student_preferences(
 	weight integer NOT NULL,
 	CONSTRAINT pk_student_preferences_user_id_event_id_employer_id PRIMARY KEY (user_id, event_id, employer_id)
 );
--- attendee student event time table
+
 CREATE TABLE interviews(
+	event_id integer NOT NULL,
+	attendee_id integer NOT NULL,
+	user_id integer NOT NULL,
+	start_time time NOT NULL,
+	CONSTRAINT pk_interviews_event_id_attendee_id_user_id PRIMARY KEY (event_id, attendee_id, user_id)
+	
 	
 );
+
 
 INSERT INTO student_preferences (user_id, event_id, employer_id, weight) VALUES (4,1,1,3);
 INSERT INTO student_preferences (user_id, event_id, employer_id, weight) VALUES (4,1,2,2);
@@ -242,6 +249,18 @@ REFERENCES events(event_id);
 ALTER TABLE events_attendees
 ADD FOREIGN KEY(attendee_id)
 REFERENCES attendees(attendee_id);
+
+ALTER TABLE interview
+ADD FOREIGN KEY(user_id)
+REFERENCES users(user_id);
+
+ALTER TABLE interview
+ADD FOREIGN KEY(attendee_id)
+REFERENCES attendees(attendee_id);
+
+ALTER TABLE interview
+ADD FOREIGN KEY(event_id)
+REFERENCES events(event_id);
 
 CREATE OR REPLACE FUNCTION pseudo_encrypt(VALUE bigint) returns int AS $$
 DECLARE
