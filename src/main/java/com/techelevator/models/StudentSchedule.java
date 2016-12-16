@@ -1,18 +1,19 @@
 package com.techelevator.models;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class StudentSchedule extends EventSchedule {
 	
-	Student student;
-
-	HashMap<LocalTime, Employer> interviews;
+	private Student student;
+	private HashMap<LocalTime, Employer> interviews;
+	private List<LocalTime> openTimeSlots;
 
 	public StudentSchedule(List<Event> events) {
 		super(events);
-		// TODO Auto-generated constructor stub
+		openTimeSlots = new ArrayList<LocalTime>(interviews.keySet());
 	}
 	
 	public static HashMap<Integer, StudentSchedule> getStudentScheduleSet(List<Student> students, List<Event> events) {
@@ -30,6 +31,15 @@ public class StudentSchedule extends EventSchedule {
 			interviews = new HashMap<>();
 		}
 		interviews.put(time, null);
+	}
+	
+	public boolean book(LocalTime timeSlot, Employer employer) {
+		if (interviews.keySet().contains(timeSlot) && !interviews.containsValue(employer)) {
+			interviews.put(timeSlot, employer);
+			openTimeSlots.remove(timeSlot);
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean isFilled() {

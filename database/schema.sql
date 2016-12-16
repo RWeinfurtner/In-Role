@@ -250,15 +250,15 @@ ALTER TABLE events_attendees
 ADD FOREIGN KEY(attendee_id)
 REFERENCES attendees(attendee_id);
 
-ALTER TABLE interview
+ALTER TABLE interviews
 ADD FOREIGN KEY(user_id)
 REFERENCES users(user_id);
 
-ALTER TABLE interview
+ALTER TABLE interviews
 ADD FOREIGN KEY(attendee_id)
 REFERENCES attendees(attendee_id);
 
-ALTER TABLE interview
+ALTER TABLE interviews
 ADD FOREIGN KEY(event_id)
 REFERENCES events(event_id);
 

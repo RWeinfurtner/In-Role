@@ -18,7 +18,6 @@ public class EmployerSchedule extends EventSchedule {
 		super(events);
 		random = new Random();
 		openTimeSlots = new ArrayList<LocalTime>(interviews.keySet());
-		// TODO Auto-generated constructor stub
 	}
 	
 	public static List<EmployerSchedule> getEmployerScheduleSet(List<Employer> employers, List<Event> events) {
@@ -70,5 +69,13 @@ public class EmployerSchedule extends EventSchedule {
 
 	public void setInterviews(HashMap<LocalTime, Student> interviews) {
 		this.interviews = interviews;
+	}
+	
+	public boolean hasStudent(Integer studentId) {
+		for (Student student : interviews.values()) {
+			if (student.getUserId() == studentId)
+				return true;
+		}
+		return false;
 	}
 }
