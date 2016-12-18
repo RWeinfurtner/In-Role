@@ -26,8 +26,6 @@ import com.techelevator.models.StudentPreference;
 import com.techelevator.models.StudentPreferencesDAO;
 import com.techelevator.models.StudentSchedule;
 
-import cucumber.api.java.Before;
-
 
 public class QueueScheduleGeneratorTest extends DAOIntegrationTest{
 
@@ -37,7 +35,7 @@ public class QueueScheduleGeneratorTest extends DAOIntegrationTest{
 	private StudentDAO studentDAO;
 	private StudentPreferencesDAO preferencesDAO;
 	
-	@Before
+	@org.junit.Before
 	public void setUpDAO() {
 		eventDAO = new JDBCEventDAO(getDataSource());
 		employerDAO = new JDBCEmployerDAO(getDataSource());
@@ -47,14 +45,10 @@ public class QueueScheduleGeneratorTest extends DAOIntegrationTest{
 	
 	@Test
 	public void generateScheduleFromEventsAndPreferences(){
-		eventDAO = new JDBCEventDAO(getDataSource());
-		employerDAO = new JDBCEmployerDAO(getDataSource());
-		studentDAO = new JDBCStudentDAO(getDataSource());
-		preferencesDAO = new JDBCStudentPreferencesDAO(getDataSource());
 		//event name
 		String eventName = "Fall Matchmaking Event";
 		List<Event> events = eventDAO.getEventsByName(eventName);
-		//employers attending
+		//employers attending TODO make this a method
 		List<Employer> employers = employerDAO.getEmployersRegisteredForEvent(events.get(0).getEventId());
 		List<EmployerSchedule> employerSchedules = new ArrayList<>();
 		for (Employer employer : employers) {
@@ -62,7 +56,7 @@ public class QueueScheduleGeneratorTest extends DAOIntegrationTest{
 			employerSched.setEmployer(employer);
 			employerSchedules.add(employerSched);
 		}
-		//student cohort attending
+		//student cohort attending TODO make this a method
 		List<Student> students = studentDAO.getStudentsByCohort(3);
 		HashMap<Integer, StudentSchedule> studentSchedules = new HashMap<>();
 		for (Student student : students) {
@@ -70,6 +64,7 @@ public class QueueScheduleGeneratorTest extends DAOIntegrationTest{
 			studentSched.setStudent(student);
 			studentSchedules.put(student.getUserId(), studentSched);
 		}
+		//TODO refactor the crap out of this shit
 		HashMap<Employer, PriorityQueue<StudentPreference>> employerStudentQs = new HashMap<>();
 		for (Employer employer : employers) {
 			List<StudentPreference> allPrefs = preferencesDAO.getStudentPreferencesByEmployer(eventName, employer.getId());

@@ -25,55 +25,35 @@ public class QueueScheduleGenerator {
 	public void GenerateSchedules(HashMap<Integer, StudentSchedule> studentSchedules, 
 									List<EmployerSchedule> employerSchedules,
 									HashMap<Employer, PriorityQueue<StudentPreference>> employerToStudentQs) {
+		//seed the results map with students and pre-defined time-slots(unavailability)
 		studentInterviewSchedules = studentSchedules;
-//		List<Integer> studentList = new ArrayList<>(studentSchedules.keySet());
 		while (employerInterviewSchedules.size() < employerSchedules.size()) {
 			//loop through employers that aren't filled
 			for (EmployerSchedule employerSchedule : employerSchedules) {
 				if (!employerInterviewSchedules.contains(employerSchedule)) {
-					//get student from prefs
 					Student student = null;
 					StudentSchedule studentSchedule = null;
-					
+					//TODO refactor the queue creation and preferences dao to include all students
 					PriorityQueue<StudentPreference> studentQ = employerToStudentQs.get(employerSchedule.getEmployer());
-					//get the next student in line without a full schedule
-//					while(true) {
-//						StudentPreference studentPreference = studentQ.poll();
-//						if (studentPreference == null)
-//							break;
-//						student = studentPreference.getStudent();
-//						studentSchedule = studentSchedules.get((Integer)student.getUserId());
-//						if (!studentSchedule.isFilled()) {
-//							break;
-//						}// else poll the next
-//					}
-					student = getNextQueuedStudentForEmployer(studentQ);
-					//if there is no queued student, get a random student without a full schedule
-//					if (student == null && studentList.size() > 0) {
-//						Collections.shuffle(studentList);
-//						student = studentSchedules.get(studentList.get(0)).getStudent();
-//						studentSchedule = studentSchedules.get((Integer)student.getUserId());
-//						//if student sch filled, pulled from list below
-//					}
-					if (student == null) {
-						student = getRandomStudentForEmployer(employerSchedule);
+					boolean done = false;
+					while(!done) {
+						//get the next student in line without a full schedule
+						student = getNextQueuedStudentForEmployer(studentQ);
+						//if none, get a random student without a full schedule
+						//TODO merge this into the queue creation
+						if (student == null) {
+							student = getRandomStudentForEmployer(employerSchedule);
+						}
+						if (student == null) { //no students with open schedules, finalize the employer schedule
+							employerInterviewSchedules.add(employerSchedule);
+							break;
+						}
+						studentSchedule = studentInterviewSchedules.get((Integer)student.getUserId());
+						//book an open time for both employer and student
+						Iterator<LocalTime> times = employerSchedule.getRandomizedOpenTimeSlots().iterator();
+						//TODO fix possible infinite loop, see above re queues, make a for loop
+						done = assignInterviewTimeSlot(times, studentSchedule, employerSchedule);
 					}
-					if (student == null) {
-						employerInterviewSchedules.add(employerSchedule);
-						continue;
-					}
-					studentSchedule = studentSchedules.get((Integer)student.getUserId());
-					//book an open time for both employer and student
-					Iterator<LocalTime> times = employerSchedule.getRandomizedOpenTimeSlots().iterator();
-					assignInterviewTimeSlot(times, studentSchedule, employerSchedule);
-//					for (LocalTime timeSlot : times) {
-//						if (studentSchedule.getInterviews().get(timeSlot) == null) {
-//							studentSchedule.getInterviews().put(timeSlot, employerSchedule.getEmployer());
-//							employerSchedule.book(timeSlot, student);
-//							studentInterviewSchedules.put(student.getUserId(), studentSchedule);
-//							break;
-//						}
-//					}
 					if (employerSchedule.isFilled()) {
 						employerInterviewSchedules.add(employerSchedule);
 					}
@@ -105,6 +85,7 @@ public class QueueScheduleGenerator {
 	private boolean assignInterviewTimeSlot(Iterator<LocalTime> times, 
 											StudentSchedule studentSchedule,
 											EmployerSchedule employerSchedule) {
+		//returns false if there are no matching open time slots
 		if (times.hasNext()) {
 			LocalTime timeSlot = times.next();
 			if (studentSchedule.book(timeSlot, employerSchedule.getEmployer())) {
